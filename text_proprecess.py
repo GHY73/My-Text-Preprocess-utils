@@ -80,22 +80,22 @@ def wordsegment(traindatas):
 """
 下面是一个简单的调用过程例子
 """
+if __name__== '__main__':
+    # step1：读文件
+    traindatas, labels = read_file('cnews.test.txt')
+    # step2：为训练数据建词汇表，直接写入本地
+    build_vocab(traindatas,'vocab.txt')
+    # step3：按照词汇表，生成word-id的映射
+    _, word2id, id2word = make_map_dict('vocab.txt')
+    # step4：训练数据转为id表示，返回narray
+    datas_id = file2id(traindatas,max_length=3000)
+    # step5:id转为训练数据，每次转一条数据，多行数据，需要循环调用
+    datas_word = id2file(datas_id[0],id2word)
 
-# step1：读文件
-traindatas, labels = read_file('cnews.test.txt')
-# step2：为训练数据建词汇表，直接写入本地
-build_vocab(traindatas,'vocab.txt')
-# step3：按照词汇表，生成word-id的映射
-_, word2id, id2word = make_map_dict('vocab.txt')
-# step4：训练数据转为id表示，返回narray
-datas_id = file2id(traindatas,max_length=3000)
-# step5:id转为训练数据，每次转一条数据，多行数据，需要循环调用
-datas_word = id2file(datas_id[0],id2word)
-
-"""
-一般预处理，第一步是分词，之后再进行step1-step4。
-这里只简单调用一下。
-如果需要先分词，自己调整处理步骤或逻辑。
-"""
-cut_data = wordsegment(traindatas)
-print('=============================Run over=============================')
+    """
+    一般预处理，第一步是分词，之后再进行step1-step4。
+    这里只简单调用一下。
+    如果需要先分词，自己调整处理步骤或逻辑。
+    """
+    cut_data = wordsegment(traindatas)
+    print('=============================Run over=============================')
